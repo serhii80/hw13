@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hw13</title>
+</head>
+<body>
+    
+</body>
+<script>
+//-----------------------Задание 1-------------------------
+    let hamster = {
+        stomach: [],
+        eat(food) {
+            this.stomach.push(food);
+        }
+    };
+
+    let speedy = {
+        stomach: [], //задаем свой stomach у speedy
+        __proto__: hamster
+    };
+
+    let lazy = {
+        stomach: [], //и у lazy аналогично
+        __proto__: hamster
+    };
+speedy.eat("apple");
+alert('Speedy ' + speedy.stomach );
+alert('Lazy ' + lazy.stomach );
+
+//-----------------------Задание 2-------------------------
+    class Animal {
+        constructor(name) {
+            this.name = name;
+        }
+    }
+    class Rabbit extends Animal {
+        constructor(name) {
+            super(name); // необходимо вызвать конструктор родителя через super
+            this.created = Date.now();
+        }
+    }
+    let rabbit = new Rabbit("Белый кролик");
+    alert(rabbit.name);
+
+</script>
+</html>

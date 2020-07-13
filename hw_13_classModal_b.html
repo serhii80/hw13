@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Modal
+    </title>
+    <style>
+        body{
+        box-sizing: border-box;
+        }
+
+        .modal {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
+        display: none;
+        }
+
+        .modal_open {
+        display: flex;
+        }
+
+        .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: black;
+        opacity: 0.7;
+        z-index: 1;
+        }
+
+        .modal_content {
+        padding: 10px;
+        border-radius: 5px;
+        z-index: 2;
+        position: relative;
+        width: 70vw;
+        height: 200px;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        }
+
+        .modal_content > div {
+        font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+    <button class="open_modal" onclick="createModalContent()">Создать модалку</button>
+    <p>А тут будет интерактивный список...</p>
+    <div class="modal">
+        <div class="overlay"></div>
+        <div class="modal_content">
+            <p class="modal_text">
+            </p>
+            <button class="modal_close" onclick="closeModal()">Закрыть</button>
+        </div>
+    </div>
+</body>
+<script>
+    let modalID = [];
+    let modalContent = [];
+
+    function createModalContent() {
+        let i = (modalID.length + 1);
+        modalID.push(i);
+        let content = ('Модальное окно ID ' + i + ' <br/>' + 'Создано ' +  (new Date().getHours()) + ':' + (new Date().getMinutes()) + ':' + (new Date().getSeconds()) + ":" + (new Date().getMilliseconds()));
+        modalContent.push(content); 
+        showModal(i);
+        renderList(i);
+    };
+
+    function closeModal() {
+        document.querySelector(".modal").classList.remove("modal_open");  
+        document.body.style.overflow = "";    
+    };
+
+    function showModal(i) {
+        document.querySelector(".modal").classList.add("modal_open");
+        document.body.style.overflow = "hidden";
+        document.querySelector(".modal_text").innerHTML = modalContent[i - 1];
+    };
+
+    function renderList(i) {
+        document.body.insertAdjacentHTML('beforeend', `
+            <div class="list" id="id${i}">
+                <hr/>
+                ${modalContent[i - 1]}
+                <button value="${i}" onclick="showModal(this.value)">Показать</button>
+                <button value="${i}" onclick="deleteModal(this.value)">Удалить</button>
+            </div>
+        `);   
+    };
+
+    function deleteModal(i) {
+        delete modalID[i - 1];
+        delete modalContent[i - 1];
+        document.getElementById("id" + i).remove();
+    };
+
+</script>
+</html>
